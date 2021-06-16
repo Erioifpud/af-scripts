@@ -1,0 +1,20 @@
+on:
+  webhook:
+    method: post
+    path: telegram-push
+jobs:
+  telegram:
+    name: push
+    runs-on: ubuntu-latest
+    steps:
+      - name: Telegram Message Notify
+        env:
+          method: ${{ on.webhook.outputs.method }}
+          body: ${{ toJson(on.webhook.outputs.body) }}
+          headers: ${{ toJson(on.webhook.outputs.headers) }}
+          outputs: ${{ toJson(on.webhook.outputs) }}
+        uses: appleboy/telegram-action@v0.1.1
+        with:
+          to: ${{ secrets.TELEGRAM_CHAT_ID }}
+          token: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          message: Test $method, $body, $headers, all - $outputs
