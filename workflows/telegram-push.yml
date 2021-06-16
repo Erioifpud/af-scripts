@@ -1,7 +1,7 @@
 on:
   webhook:
     method: post
-    path: telegram-push
+    path: /telegram-push
 jobs:
   telegram:
     name: push
