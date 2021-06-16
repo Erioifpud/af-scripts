@@ -18,3 +18,10 @@ jobs:
           to: ${{ secrets.TELEGRAM_CHAT_ID }}
           token: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           message: Test $method, $body, $headers, all - $outputs
+      - name: Request to hookbin
+        uses: actionsflow/axios@v1
+        with:
+          url: https://hookbin.com/${{ secrets.HOOKBIN_ENDPOINT }}
+          method: 'POST'
+          content-type: application/json
+          data: '${{ toJson(on.webhook.outputs) }}'
